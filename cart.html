@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #e66767;
+}
+
+.cart-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color:  #f1a9a9;
+}
+
+.cart-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.cart-body {
+    display: flex;
+    align-items: center;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+}
+
+.product img {
+    max-width: 100px;
+    margin-right: 20px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.cart-total {
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .cart-body {
+        flex-direction: column;
+    }
+    
+    .product {
+        flex-direction: column;
+        align-items: start;
+    }
+    
+    .cart-footer {
+        flex-direction: column;
+        align-items: start;
+    }
+    
+    .cart-total {
+        margin-top: 20px;
+    }
+}
+
+/*  user info */
+#user-info, #order-summary {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px; 
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #f1a9a9;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#billing-form, #order-summary {
+    width: 100%;
+}
+
+input[type=text],
+input[type=tel],
+input[type=email],
+textarea {
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type=submit] {
+    width: 20%;
+    padding: 10px;
+    background-color: #ff868c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #ff5f5f;
+}
+
+input[type=radio] {
+    margin-right: 5px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+
+/*
+#billing-form {
+    display: none;
+}
+*/
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color:  #ff868c;
+    color: rgb(255, 248, 248);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff5f5f;
+}
+
+#user-details, #cart-summary {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    input[type=text],
+    input[type=tel],
+    input[type=email],
+    textarea,
+    input[type=submit] {
+        width: calc(100% - 40px);
+    }
+}
+
+
+.creator-section {
+  background-color: #e66767; 
+  padding: 20px; 
+  text-align: center; 
+  color: white;
+}
+
+.creator-container {
+  max-width: 600px;
+  margin: auto; 
+  background-color: #f1a9a9; 
+  border-radius: 5px; 
+  padding: 20px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+.creator-container p {
+  margin: 10px 0; 
+  font-size: 16px; 
+}
+
+.creator-container a {
+  color: #007bff; 
+  text-decoration: none; 
+}
+
+.creator-container a:hover {
+  text-decoration: underline; 
+}
+
+
+</style>
+<body>
+
+<div class="cart-container">
+    <div class="cart-header">
+        <h1>My Cart</h1>
+    </div>
+    <div class="cart-body">
+        <div class="product">
+            <img src="./images/chair1.png" alt="Charlotte Upholstered Arm Chair">
+            <div class="product-details">
+                <h2>Charlotte Upholstered Arm Chair</h2>
+                <p>Essential Charcoal</p>
+                <p>This made to order item is not cancellable</p>
+                <p><strong>$254.00</strong></p>
+                <label for="quantity">Quantity:</label>
+                <select id="quantity" name="quantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <button id="update-cart"><a href="./index.html">Update Cart</a></button>
+        <div class="cart-total">
+            <p>Subtotal: <span id="subtotal">$254.00</span></p>
+            <p>Shipping: <span id="shipping">Free</span></p>
+            <p>Total: <span id="total">$254.00</span></p>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('quantity').addEventListener('change', updateCart);
+
+function updateCart() {
+    const quantity = document.getElementById('quantity').value;
+    const price = 254; 
+    const subtotal = quantity * price;
+    
+    document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+    document.getElementById('total').innerText = `$${subtotal.toFixed(2)}`;
+}
+
+</script>
+
+
+
+<div id="user-info">
+    <h2>Billing Information</h2>
+    <form id="billing-form">
+        <input type="text" id="name" placeholder="Full Name" required /><br/>
+        <input type="tel" id="mobile" placeholder="Mobile Number" required /><br/>
+        <input type="email" id="email" placeholder="Email Address" required /><br/>
+        <textarea id="address" placeholder="Address" required></textarea><br/>
+
+        <p>Payment Options:</p>
+        <input type="radio" id="gpay" name="payment" value="Google Pay" checked />
+        <label for="gpay">Google Pay</label><br/>
+        <input type="radio" id="phonepay" name="payment" value="Phone Pay" />
+        <label for="phonepay">Phone Pay</label><br/>
+        
+        <input type="radio" id="benefitPay" name="payment" value=" BenefitPay" />
+        <label for="phonepay"> BenefitPay</label><br/>
+        <input type="radio" id="paytm" name="payment" value=" Paytm" />
+        <label for="phonepay"> Paytm</label><br/>
+        <br>
+        <input type="submit" value="Submit Order"/>
+    </form>
+</div>
+
+
+<div id="order-summary" style="display:none;">
+    <h2>Order Summary</h2>
+    <div id="user-details"></div>
+    <div id="cart-summary"></div>
+    <button onclick="goBackToShop()"><a href="./cart.html">Return to Shop</a></button>
+</div>
+<script>
+   
+
+
+document.getElementById('billing-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const userInfo = {
+        name: document.getElementById('name').value,
+        mobile: document.getElementById('mobile').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value,
+        payment: document.querySelector('input[name="payment"]:checked').value,
+    };
+    
+    
+    document.querySelector('.cart-container').style.display = 'none';
+    document.getElementById('user-info').style.display = 'none';
+    
+    document.getElementById('order-summary').style.display = 'block';
+    
+    document.getElementById('user-details').innerHTML = `
+        <p>Name: ${userInfo.name}</p>
+        <p>Mobile: ${userInfo.mobile}</p>
+        <p>Email: ${userInfo.email}</p>
+        <p>Address: ${userInfo.address}</p>
+        <p>Payment Method: ${userInfo.payment}</p>
+    `;
+
+    document.getElementById('cart-summary').innerHTML = `
+        <p>Subtotal: ${document.getElementById('subtotal').innerText}</p>
+        <p>Total: ${document.getElementById('total').innerText}</p>
+    `;
+    
+});
+
+
+function goBackToShop() {
+   
+    window.location.reload(); 
+}
+
+</script>
+<section class="creator-section">
+    <div class="creator-container">
+        <p>Website created by <strong>Ahmad Raza Siddiqui</strong></p>
+        <p>Email: <a href="mailto:ahmadrza.1110@gmail.com">ahmadrza.1110@gmail.com</a></p>
+        <p>Mobile: <a href="tel:+918102326415">+91 81023 26415</a></p>
+        <p>WhatsApp: <a href="https://wa.me/918102326415" target="_blank">Message on WhatsApp</a></p>
+        <br>
+ 
+        <div class="social-icons">
+            <a href="https://www.instagram.com/ahmd.rs_" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" style="width:24px;height:24px;"></a>
+            <a href="https://github.com/ahmadrzaa" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" style="width:24px;height:24px;"></a>
+            <a href="https://www.facebook.com/eyesofahmd" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style="width:24px;height:24px;"></a>
+            <a href="mailto:ahmadrza.1110@gmail.com"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail" style="width:24px;height:24px;"></a>
+            <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" style="width:50px;height:24px;"></a>
+        </div>
+    </div>
+</section>
+    
+
+<script src="script.js"></script>
+</body>
+</html>
